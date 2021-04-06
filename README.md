@@ -1,33 +1,33 @@
-# discord.api
-<a href="https://pypi.org/project/discord.api" traget="_blank">
-    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/discord.api">
+# discord.wrapper
+<a href="https://pypi.org/project/discord.wrapper" traget="_blank">
+    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/discord.wrapper">
 </a>
 
-<a href="https://pypi.org/project/discord.api" traget="_blank">
-	<img alt="PyPI - Downloads" src="https://pepy.tech/badge/discord.api">
+<a href="https://pypi.org/project/discord.wrapper" traget="_blank">
+	<img alt="PyPI - Downloads" src="https://pepy.tech/badge/discord.wrapper">
 </a>
 
-<a href="https://pypi.org/project/discord.api" traget="_blank">
-    <img alt="PyPI - Supported Python Versions" src="https://img.shields.io/pypi/pyversions/discord.api.svg">
+<a href="https://pypi.org/project/discord.wrapper" traget="_blank">
+    <img alt="PyPI - Supported Python Versions" src="https://img.shields.io/pypi/pyversions/discord.wrapper.svg">
 </a>
 
-<a href="https://pypi.org/project/discord.api" traget="_blank">
-    <img alt="PyPI - License" src="https://img.shields.io/github/license/FrostiiWeeb/discord.api">
+<a href="https://pypi.org/project/discord.wrapper" traget="_blank">
+    <img alt="PyPI - License" src="https://img.shields.io/github/license/FrostiiWeeb/discord.wrapper">
 </a>
 
-An api wrapper for discord wich uses `async` and `await`.
+An wrapper wrapper for discord wich uses `async` and `await`.
 
 # How to install
 
 ```shell
-python3 -m pip install discord.api
+python3 -m pip install discord.wrapper
 ```
 
 ## Bot Example
 ```python
-from discord import api
+from discord import wrapper
 
-bot = api.Bot(token="Your Bot Token")
+bot = wrapper.Bot(token="Your Bot Token")
 
 bot.run()
 ```
@@ -35,9 +35,9 @@ bot.run()
 ## Subclassed Bot
 
 ```python
-from discord import api
+from discord import wrapper
 
-class MyBot(api.Bot):
+class MyBot(wrapper.Bot):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
