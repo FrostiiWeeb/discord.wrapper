@@ -1,14 +1,14 @@
 from setuptools import setup
 import re
 
-with open('discord/api/__init__.py') as f:
+with open('discord/wrapper/__init__.py') as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)
 
 with open("README.md", "r") as f:
 	long_desc = f.read()
 
 setup(
-name="discord.api",
+name="discord.wrapper",
 author="Alex Hutz",
 author_email="frostiiweeb@gmail.com",
 keywords=["discord"],
@@ -17,7 +17,7 @@ packages=['discord.api'],
 license='MIT',
 long_description=long_desc,
 long_description_content_type="text/markdown",
-description="An package for discord pagination.",
+description="An API wrapper for discord.",
 install_requires=['websockets>=8.1', 'aiohttp>=3.7.3'],
 python_requires='>=3.7.1'
 classifiers=[
