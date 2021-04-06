@@ -4,8 +4,8 @@ import json
 import asyncio
 import aiohttp
 import json
-from gateway import Gateway
-from intents import Intents
+from .gateway import Gateway
+from .intents import Intents
 import random
 import string
 import functools
