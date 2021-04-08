@@ -44,4 +44,8 @@ class MyBot(wrapper.Bot):
 bot = MyBot(token="Your Bot Token")
 
 bot.run()
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> e13b87682e850c26e831292bb19976027a2c79c2

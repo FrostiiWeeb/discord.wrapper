@@ -29,6 +29,7 @@ class Gateway:
 		t = Template('{"op": 2,"d": {"token": "$token","intents": $intents, "properties": {"$os": "linux","$browser": "discord.api","$device": "discord.api"}},"s": null,"t": null}')
 		return t.substitute(token=str(token), intents=intents, os="$os", browser="$browser", device="$device")
 		
+<<<<<<< HEAD
 	async def _close(self):
 		"""
 		The |async| function to close the connection.
@@ -43,6 +44,8 @@ class Gateway:
 		
 		asyncio.get_event_loop().run_until_complete(_close())
 		
+=======
+>>>>>>> e13b87682e850c26e831292bb19976027a2c79c2
 	async def _connect(self, _token : str, _intents : int):
 		"""
 		Function to connect the bot to discord.
@@ -56,13 +59,23 @@ class Gateway:
 			The intents for the bot.
 		"""		
 		try:
+<<<<<<< HEAD
 			self.ws = await aiohttp.ClientSession().ws_connect("wss://gateway.discord.gg/?v=6&encoding=json")			
+=======
+			ws = await websockets.connect("wss://gateway.discord.gg/?v=6&encoding=json")
+>>>>>>> e13b87682e850c26e831292bb19976027a2c79c2
 			heartbeat = '{"op": 1,"d": 251}'
 			p = self.identify_json(_token, _intents)
 			h = json.loads(heartbeat)
 			h_json = json.dumps(h)
+<<<<<<< HEAD
 			await self.ws.send_str(h_json)
 			await self.ws.send_str(p)
+=======
+			print(p)
+			await ws.send(h_json)
+			await ws.send(p)
+>>>>>>> e13b87682e850c26e831292bb19976027a2c79c2
 		except Exception as e:
 			print(e)
 		
