@@ -11,6 +11,10 @@
     <img alt="PyPI - Supported Python Versions" src="https://img.shields.io/pypi/pyversions/discord.wrapper.svg">
 </a>
 
+<a href="https://discordwrapper.readthedocs.io/en/latest" traget="_blank">
+    <img alt="PyPI - Documentation" src="https://readthedocs.org/projects/pycord/badge/?version=dev">
+</a>  
+
 <a href="https://pypi.org/project/discord.wrapper" traget="_blank">
     <img alt="PyPI - License" src="https://img.shields.io/github/license/FrostiiWeeb/discord.wrapper">
 </a>
