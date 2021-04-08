@@ -1,0 +1,13 @@
+README.md
+setup.py
+discord.wrapper.egg-info/PKG-INFO
+discord.wrapper.egg-info/SOURCES.txt
+discord.wrapper.egg-info/dependency_links.txt
+discord.wrapper.egg-info/requires.txt
+discord.wrapper.egg-info/top_level.txt
+discord/wrapper/__init__.py
+discord/wrapper/bot.py
+discord/wrapper/embed.py
+discord/wrapper/gateway.py
+discord/wrapper/http_client.py
+discord/wrapper/intents.py
