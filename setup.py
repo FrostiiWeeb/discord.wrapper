@@ -18,14 +18,9 @@ license='MIT',
 long_description=long_desc,
 long_description_content_type="text/markdown",
 description="An API wrapper for discord.",
-<<<<<<< HEAD
 install_requires=['aiohttp>=3.7.3'],
 python_requires='>=3.7.1',
 url="https://discordwrapper.readthedocs.io/en/latest",
-=======
-install_requires=['websockets>=8.1', 'aiohttp>=3.7.3'],
-python_requires='>=3.7.1',
->>>>>>> e13b87682e850c26e831292bb19976027a2c79c2
 classifiers=[
     'Development Status :: 3 - Alpha',      # Chose either "3 - Alpha", "4 - Beta" or "5 - Production/Stable" as the current state of your package
     'Intended Audience :: Developers',      # Define that your audience are developers
@@ -34,12 +29,7 @@ classifiers=[
     'Programming Language :: Python :: 3',  
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
-<<<<<<< HEAD
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
   ],
 )
-=======
-  ],
-)
->>>>>>> e13b87682e850c26e831292bb19976027a2c79c2
