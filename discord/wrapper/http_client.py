@@ -34,9 +34,9 @@ class HTTPClient:
 				async with session.get(BASE, headers=headers) as resp:
 					data = await resp.json()
 					return json.dumps(data)
-				await session.close()
+					await session.close()
 		except Exception as e:
-			raise InvokeError(e)	
+			print(e)
 			
 	async def send_message(self, channel_id=None, content=None, *, embed=None):
 		"""
@@ -75,4 +75,4 @@ class HTTPClient:
 				data = await resp.json()
 				return json.dumps(data)
 		except Exception as e:
-			raise InvokeError(e)
+			print(e)
