@@ -12,7 +12,7 @@
 </a>
 
 <a href="https://discordwrapper.readthedocs.io/en/latest" traget="_blank">
-    <img alt="PyPI - Documentation" src="https://readthedocs.org/projects/pycord/badge/?version=dev">
+    <img alt="PyPI - Documentation" src="https://readthedocs.org/projects/discordwrapper/badge/?version=master">
 </a>  
 
 <a href="https://pypi.org/project/discord.wrapper" traget="_blank">
