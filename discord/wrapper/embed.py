@@ -21,7 +21,7 @@ class Embed:
             if val:
                 fmt += ' {}={}'.format(attr, val)
                 break
-        return '<Embed{}>'.format(fmt)
+        return "<Embed{}>".format(fmt)
 
     @classmethod
     def from_dict(cls, data):
@@ -80,4 +80,5 @@ class Embed:
             key: getattr(self, key)
             for key in self.__slots__
             if hasattr(self, key) and getattr(self, key)
-        }
+        }       
+        

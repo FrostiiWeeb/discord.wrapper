@@ -29,19 +29,12 @@ class Gateway:
 		t = Template('{"op": 2,"d": {"token": "$token","intents": $intents, "properties": {"$os": "linux","$browser": "discord.api","$device": "discord.api"}},"s": null,"t": null}')
 		return t.substitute(token=str(token), intents=intents, os="$os", browser="$browser", device="$device")
 	
-	async def _close(self):
+	async def close(self):
 		"""
 		The |async| function to close the connection.
 		"""
 				
 		await self.ws.close()
-		
-	def close(self):
-		"""
-		The actual function to close the connection.
-		"""
-		
-		asyncio.get_event_loop().run_until_complete(_close())
 		
 	async def _connect(self, _token : str, _intents : int):
 		"""

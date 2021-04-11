@@ -49,3 +49,6 @@ bot = MyBot(token="Your Bot Token")
 
 bot.run()
 ```
+
+# Links:
+• [Official Support Server](https://discord.gg/Ns5W4pqguE)

@@ -32,6 +32,8 @@ class Bot:
 		The priveliged intents.
 	command_prefix : str
 		The command prefix for the bot.	
+	http : HTTPClient
+	    The http client that sends requests to discord.
 	"""
 	def __init__(self, command_prefix : str = None, intents : int = 0, token : str = None):
 		self.http = HTTPClient(self)
@@ -58,5 +60,6 @@ class Bot:
 		"""
 		try:
 			payload = Gateway().connect(str(self.token), self.intents)
+			payload
 		except Exception as e:
-			raise InvokeError(e)																									
+			raise InvokeError(e)															
