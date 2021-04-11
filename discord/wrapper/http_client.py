@@ -8,7 +8,7 @@ class HTTPClient:
 						
 		self.__session = aiohttp.ClientSession()	
 		user_agent = 'DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}'
-		self.user_agent = user_agent.format("0.2.1", sys.version_info, aiohttp.__version__)
+		self.user_agent = user_agent.format("0.2.3", sys.version_info, aiohttp.__version__)
 		self.token = str(token)		
 		self.headers = {
 		"Authorization": "Bot {}".format(self.token),
@@ -30,7 +30,7 @@ class HTTPClient:
             
 
 			
-			async with aiohttp.ClientSessiom() as session:
+                            async with aiohttp.ClientSession() as session: 
 				async with session.get(BASE, headers=headers) as resp:
 					data = await resp.json()
 					return json.dumps(data)
@@ -71,7 +71,7 @@ class HTTPClient:
             
 
 			
-			async with session.get(BASE, headers=headers) as resp:
+			async with self.__session.get(BASE, headers=headers) as resp:
 				data = await resp.json()
 				return json.dumps(data)
 		except Exception as e:

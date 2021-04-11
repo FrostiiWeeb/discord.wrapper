@@ -36,7 +36,7 @@ class Bot:
 	    The http client that sends requests to discord.
 	"""
 	def __init__(self, command_prefix : str = None, intents : int = 0, token : str = None):
-		self.http = HTTPClient(self)
+                self.http = HTTPClient(str(token))
 		self.token = token
 		self.intents = intents
 		self.command_prefix = command_prefix
