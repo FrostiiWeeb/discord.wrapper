@@ -11,15 +11,7 @@
     <img alt="PyPI - Supported Python Versions" src="https://img.shields.io/pypi/pyversions/discord.wrapper.svg">
 </a>
 
-<a href="https://discordwrapper.readthedocs.io/en/latest" traget="_blank">
-    <img alt="PyPI - Documentation" src="https://readthedocs.org/projects/discordwrapper/badge/?version=master">
-</a>  
-
-<a href="https://pypi.org/project/discord.wrapper" traget="_blank">
-    <img alt="PyPI - License" src="https://img.shields.io/github/license/FrostiiWeeb/discord.wrapper">
-</a>
-
-An wrapper wrapper for discord wich uses `async` and `await`.
+An API wrapper for discord wich uses `async` and `await`.
 
 # How to install
 
@@ -31,7 +23,7 @@ python3 -m pip install discord.wrapper
 ```python
 from discord import wrapper
 
-bot = wrapper.Bot(token="Your Bot Token")
+bot = wrapper.Bot(public_key = "Your Public Key", token="Your Bot Token")
 
 bot.run()
 ```
@@ -45,10 +37,12 @@ class MyBot(wrapper.Bot):
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 
-bot = MyBot(token="Your Bot Token")
+bot = MyBot(public_key = "public_key", token="Your Bot Token")
 
 bot.run()
 ```
+
+## Fore more info, check out the docs.
 
 # Links:
 • [Official Support Server](https://discord.gg/Ns5W4pqguE)

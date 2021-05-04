@@ -1,7 +1,10 @@
-from .bot import Bot, InvokeError
-from .gateway import Gateway, InvokeError
-from .intents import Intents
-from .http_client import HTTPClient
-from .embed import Embed
+from .bot import *
+from .gateway import *
+from .intents import *
+from .http_client import *
+from .embed import *
+from .user import *
+from .channel import *
+from .guild import *
 
-__version__ = "0.2.4"
+__version__ = "0.2.7"

@@ -1,18 +1,22 @@
+import json
+
 class Embed:
-    """Class that formats an embed"""
-    __slots__ = (
-        'color', 'title', 'url', 'author',
-        'description', 'fields', 'image',
-        'thumbnail', 'footer', 'timestamp'
-    )
+    __slots__ = ('colour', 'color', 'title', 'description','fields','author',)
 
     def __init__(self, **kwargs):
-        """Initialises an Embed object"""
-        self.color = kwargs.get('color')
-        self.title = kwargs.get('title')
-        self.url = kwargs.get('title_url')
-        self.description = kwargs.get('description')
+        self.color = kwargs.pop('color',None)
+        self.colour = kwargs.pop('colour',None)
+        self.title = kwargs.get('title', None)
+        self.description = kwargs.pop('description', "DEFAULT") 
         self.fields = []
+        
+    def set_author(self, name : str):
+        self.author = {"name": name}
+        return self
+        
+    def add_field(self, name : str, value : str, inline : bool = True):
+        self.fields.append({"name": name, "value": value, "inline": inline})
+        return self
 
     def __repr__(self):
         fmt = ''
@@ -21,64 +25,21 @@ class Embed:
             if val:
                 fmt += ' {}={}'.format(attr, val)
                 break
-        return "<Embed{}>".format(fmt)
+        return f'<Embed{fmt}>'
+        
+      
 
-    @classmethod
-    def from_dict(cls, data):
-        self = cls.__new__(cls)
-        for attr in data:
-            if attr == 'timestamp':  # special case
-                setattr(self, attr, parse_time(data[attr]))
-            else:
-                setattr(self, attr, data[attr])
-
-    def del_field(self, index):
-        """Deletes a field by index"""
-        self.fields.pop(index)
-        return self
-
-    def add_field(self, name, value, inline=True):
-        """Adds a field"""
-        field = {
-            'name': str(name),
-            'value': str(value),
-            'inline': inline
-        }
-        self.fields.append(field)
-        return self
-
-    def set_author(self, name, icon_url=None, url=None):
-        """Sets the author of the embed"""
-        self.author = {
-            'name': str(name),
-            'icon_url': icon_url,
-            'url': str(url)
-        }
-        return self
-
-    def set_thumbnail(self, url):
-        """Sets the thumbnail of the embed"""
-        self.thumbnail = {'url': url}
-        return self
-
-    def set_image(self, url):
-        """Sets the image of the embed"""
-        self.image = {'url': url}
-        return self
-
-    def set_footer(self, text, icon_url=None):
-        """Sets the footer of the embed"""
-        self.footer = {
-            'text': str(text),
-            'icon_url': icon_url
-        }
-        return self
-
-    def to_dict(self):
+    def to_dict(self, to_json=True):
         """Turns the object into a dictionary"""
-        d = {
-            key: getattr(self, key)
+        d = {"embed": {key: getattr(self, key)
             for key in self.__slots__
             if hasattr(self, key) and getattr(self, key)
-        }       
-        
+        }}
+        new = json.dumps(d)
+        if to_json:
+            return json.dumps(d)
+        else:
+            return str(new)
+
+
+                  
