@@ -1,6 +1,5 @@
 import aiohttp, asyncio, json, sys, os              
 from pathlib import Path   
-from . import __version__
 
 
 
@@ -13,7 +12,7 @@ class HTTPClient:
 		self.__session = aiohttp.ClientSession()
 		self.BASE = "https://discordapp.com/api/v6"
 		user_agent = 'DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}'
-		self.user_agent = user_agent.format(__version__, sys.version_info, aiohttp.__version__)
+		self.user_agent = user_agent.format("x.x.x", sys.version_info, aiohttp.__version__)
 		self.token = str(token)		
 		self.headers = {
 		"Authorization": "Bot {}".format(self.token),
