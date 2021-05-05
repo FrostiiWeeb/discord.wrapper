@@ -86,15 +86,16 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">discord.wrapper package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-bot-module">discord.wrapper.bot module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-channel-module">discord.wrapper.channel module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-content-module">discord.wrapper.content module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-embed-module">discord.wrapper.embed module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.bot">discord.wrapper.bot module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.channel">discord.wrapper.channel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.content">discord.wrapper.content module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.embed">discord.wrapper.embed module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.gateway">discord.wrapper.gateway module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-guild-module">discord.wrapper.guild module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-http-client-module">discord.wrapper.http_client module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.guild">discord.wrapper.guild module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.http_client">discord.wrapper.http_client module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.intents">discord.wrapper.intents module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#discord-wrapper-user-module">discord.wrapper.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper.user">discord.wrapper.user module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-discord.wrapper">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -169,17 +170,276 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="discord-wrapper-bot-module">
-<h2>discord.wrapper.bot module<a class="headerlink" href="#discord-wrapper-bot-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.wrapper.bot">
+<span id="discord-wrapper-bot-module"></span><h2>discord.wrapper.bot module<a class="headerlink" href="#module-discord.wrapper.bot" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.bot.Bot">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.bot.</span></code><code class="sig-name descname"><span class="pre">Bot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intents</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><p>A class for discord bots.</p>
+<p>Parameters</p>
+</div></blockquote>
+<blockquote>
+<div><dl class="simple">
+<dt>token<span class="classifier">str</span></dt><dd><p>The token for the bot.</p>
+</dd>
+<dt>intents<span class="classifier">int</span></dt><dd><p>The priveliged intents.</p>
+</dd>
+<dt>public_key<span class="classifier">str</span></dt><dd><p>The public key of the bot.</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.close">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.close" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>The function to close the websocket connection.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.create_slash">
+<code class="sig-name descname"><span class="pre">create_slash</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'A</span> <span class="pre">command'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'content':</span> <span class="pre">'hi',</span> <span class="pre">'tts':</span> <span class="pre">False}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.create_slash" title="Permalink to this definition">¶</a></dt>
+<dd><p>A function to create a slash command.</p>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>The name of the slash cmd.</p>
+</dd>
+<dt>description<span class="classifier">str</span></dt><dd><p>The description of the slash cmd.</p>
+</dd>
+<dt>callback</dt><dd><p>The callback of the slash command when its called.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.db_insert">
+<code class="sig-name descname"><span class="pre">db_insert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">callback</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public_key</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.db_insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.fetch_channel">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">fetch_channel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.fetch_channel" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</div></blockquote>
+<p>A function to fetch a channel.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is an API call, not from the bots cache.</p>
 </div>
-<div class="section" id="discord-wrapper-channel-module">
-<h2>discord.wrapper.channel module<a class="headerlink" href="#discord-wrapper-channel-module" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.get_guild_data">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_guild_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.get_guild_data" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</div></blockquote>
+<p>A function to get the bot’s guild data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.get_user_data">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_user_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.get_user_data" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</div></blockquote>
+<p>A function to get the bot’s user data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.init">
+<code class="sig-name descname"><span class="pre">init</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.init" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>This function initializes the bot to have its attributes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Bot.run">
+<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Bot.run" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Function</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+<p>A function to run the bot.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This is a blocking function, so if you try to run any code after this function, it won’t run.</p>
 </div>
-<div class="section" id="discord-wrapper-content-module">
-<h2>discord.wrapper.content module<a class="headerlink" href="#discord-wrapper-content-module" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="discord.wrapper.bot.Document">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.bot.</span></code><code class="sig-name descname"><span class="pre">Document</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">document_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.delete">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">delete</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.delete_by_id">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">delete_by_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.delete_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.find">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">find</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.find" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.find_by_id">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">find_by_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.find_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.get_all">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">get_all</span></code><a class="headerlink" href="#discord.wrapper.bot.Document.get_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.get_by_id">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get_by_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.get_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.increment">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">increment</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amount</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.increment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.insert">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">insert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.insert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.unset">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">unset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.unset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.update">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">update</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.update" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.update_by_id">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">update_by_id</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.update_by_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.bot.Document.upsert">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">upsert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.bot.Document.upsert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="discord-wrapper-embed-module">
-<h2>discord.wrapper.embed module<a class="headerlink" href="#discord-wrapper-embed-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.wrapper.channel">
+<span id="discord-wrapper-channel-module"></span><h2>discord.wrapper.channel module<a class="headerlink" href="#module-discord.wrapper.channel" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.channel.Channel">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.channel.</span></code><code class="sig-name descname"><span class="pre">Channel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'id':</span> <span class="pre">'444',</span> <span class="pre">'last_message_id':</span> <span class="pre">'444',</span> <span class="pre">'name':</span> <span class="pre">'null',</span> <span class="pre">'nsfw':</span> <span class="pre">False,</span> <span class="pre">'topic':</span> <span class="pre">'null'}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.channel.Channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.channel.Channel.snowflake_time">
+<code class="sig-name descname"><span class="pre">snowflake_time</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">datetime.datetime</span><a class="headerlink" href="#discord.wrapper.channel.Channel.snowflake_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-discord.wrapper.content">
+<span id="discord-wrapper-content-module"></span><h2>discord.wrapper.content module<a class="headerlink" href="#module-discord.wrapper.content" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.content.Content">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.content.</span></code><code class="sig-name descname"><span class="pre">Content</span></code><a class="headerlink" href="#discord.wrapper.content.Content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class that formats content.</p>
+<dl class="py method">
+<dt id="discord.wrapper.content.Content.add_content">
+<code class="sig-name descname"><span class="pre">add_content</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.content.Content.add_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.content.Content.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.content.Content.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-discord.wrapper.embed">
+<span id="discord-wrapper-embed-module"></span><h2>discord.wrapper.embed module<a class="headerlink" href="#module-discord.wrapper.embed" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.embed.Embed">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.embed.</span></code><code class="sig-name descname"><span class="pre">Embed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.embed.Embed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.embed.Embed.add_field">
+<code class="sig-name descname"><span class="pre">add_field</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inline</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.embed.Embed.add_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.author">
+<code class="sig-name descname"><span class="pre">author</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.color">
+<code class="sig-name descname"><span class="pre">color</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.colour">
+<code class="sig-name descname"><span class="pre">colour</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.colour" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.description">
+<code class="sig-name descname"><span class="pre">description</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.description" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.fields">
+<code class="sig-name descname"><span class="pre">fields</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.embed.Embed.set_author">
+<code class="sig-name descname"><span class="pre">set_author</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.embed.Embed.set_author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="discord.wrapper.embed.Embed.title">
+<code class="sig-name descname"><span class="pre">title</span></code><a class="headerlink" href="#discord.wrapper.embed.Embed.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.embed.Embed.to_dict">
+<code class="sig-name descname"><span class="pre">to_dict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_json</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.embed.Embed.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns the object into a dictionary</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-discord.wrapper.gateway">
 <span id="discord-wrapper-gateway-module"></span><h2>discord.wrapper.gateway module<a class="headerlink" href="#module-discord.wrapper.gateway" title="Permalink to this headline">¶</a></h2>
@@ -243,11 +503,72 @@
 </dd></dl>
 
 </div>
-<div class="section" id="discord-wrapper-guild-module">
-<h2>discord.wrapper.guild module<a class="headerlink" href="#discord-wrapper-guild-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.wrapper.guild">
+<span id="discord-wrapper-guild-module"></span><h2>discord.wrapper.guild module<a class="headerlink" href="#module-discord.wrapper.guild" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.guild.Guild">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.guild.</span></code><code class="sig-name descname"><span class="pre">Guild</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'approximate_member_count':</span> <span class="pre">0,</span> <span class="pre">'features':</span> <span class="pre">['null'],</span> <span class="pre">'id':</span> <span class="pre">'444',</span> <span class="pre">'name':</span> <span class="pre">'null',</span> <span class="pre">'owner_id':</span> <span class="pre">'888',</span> <span class="pre">'roles':</span> <span class="pre">[{'id':</span> <span class="pre">'2909267986263572999',</span> <span class="pre">'name':</span> <span class="pre">'&#64;everyone',</span> <span class="pre">'permissions':</span> <span class="pre">'49794752',</span> <span class="pre">'position':</span> <span class="pre">'100',</span> <span class="pre">'color':</span> <span class="pre">'0',</span> <span class="pre">'hoist':</span> <span class="pre">False,</span> <span class="pre">'managed':</span> <span class="pre">False,</span> <span class="pre">'mentionable':</span> <span class="pre">False}]}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.guild.Guild" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.guild.Guild.snowflake_time">
+<code class="sig-name descname"><span class="pre">snowflake_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">datetime.datetime</span><a class="headerlink" href="#discord.wrapper.guild.Guild.snowflake_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="discord-wrapper-http-client-module">
-<h2>discord.wrapper.http_client module<a class="headerlink" href="#discord-wrapper-http-client-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.wrapper.http_client">
+<span id="discord-wrapper-http-client-module"></span><h2>discord.wrapper.http_client module<a class="headerlink" href="#module-discord.wrapper.http_client" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.http_client.HTTPClient">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.http_client.</span></code><code class="sig-name descname"><span class="pre">HTTPClient</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an http client sending requests to discord.</p>
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.delete">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">delete</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.delete" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.fetch_message">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">fetch_message</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.fetch_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetches a channel from discord.</p>
+<dl class="simple">
+<dt>channel_id<span class="classifier">int</span></dt><dd><p>The channel id to fetch.</p>
+</dd>
+<dt>message_id<span class="classifier">int</span></dt><dd><p>The message id to fetch.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.get">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.patch">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">patch</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.patch" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.post">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">post</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.put">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">put</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.put" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="discord.wrapper.http_client.HTTPClient.send_message">
+<em class="property"><span class="pre">async</span> </em><code class="sig-name descname"><span class="pre">send_message</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">channel_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.http_client.HTTPClient.send_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a message to discord.</p>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-discord.wrapper.intents">
 <span id="discord-wrapper-intents-module"></span><h2>discord.wrapper.intents module<a class="headerlink" href="#module-discord.wrapper.intents" title="Permalink to this headline">¶</a></h2>
@@ -274,8 +595,33 @@
 </dd></dl>
 
 </div>
-<div class="section" id="discord-wrapper-user-module">
-<h2>discord.wrapper.user module<a class="headerlink" href="#discord-wrapper-user-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-discord.wrapper.user">
+<span id="discord-wrapper-user-module"></span><h2>discord.wrapper.user module<a class="headerlink" href="#module-discord.wrapper.user" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="discord.wrapper.user.ClientUser">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.user.</span></code><code class="sig-name descname"><span class="pre">ClientUser</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'avatar':</span> <span class="pre">'null',</span> <span class="pre">'bot':</span> <span class="pre">True,</span> <span class="pre">'discriminator':</span> <span class="pre">'0000',</span> <span class="pre">'id':</span> <span class="pre">'444',</span> <span class="pre">'mfa_enabled':</span> <span class="pre">'null',</span> <span class="pre">'username':</span> <span class="pre">'null'}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.user.ClientUser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.user.ClientUser.snowflake_time">
+<code class="sig-name descname"><span class="pre">snowflake_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">datetime.datetime</span><a class="headerlink" href="#discord.wrapper.user.ClientUser.snowflake_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="discord.wrapper.user.User">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">discord.wrapper.user.</span></code><code class="sig-name descname"><span class="pre">User</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'avatar':</span> <span class="pre">'null',</span> <span class="pre">'bot':</span> <span class="pre">True,</span> <span class="pre">'discriminator':</span> <span class="pre">'0000',</span> <span class="pre">'id':</span> <span class="pre">'444',</span> <span class="pre">'mfa_enabled':</span> <span class="pre">'null',</span> <span class="pre">'username':</span> <span class="pre">'null'}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#discord.wrapper.user.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="discord.wrapper.user.User.snowflake_time">
+<code class="sig-name descname"><span class="pre">snowflake_time</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">datetime.datetime</span><a class="headerlink" href="#discord.wrapper.user.User.snowflake_time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-discord.wrapper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-discord.wrapper" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

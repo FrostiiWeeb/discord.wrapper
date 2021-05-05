@@ -76,3 +76,10 @@ discord.wrapper.user module
    :undoc-members:
    :show-inheritance:
 
+Module contents
+---------------
+
+.. automodule:: discord.wrapper
+   :members:
+   :undoc-members:
+   :show-inheritance:
