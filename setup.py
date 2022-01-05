@@ -18,8 +18,8 @@ license='MIT',
 long_description=long_desc,
 long_description_content_type="text/markdown",
 description="An API wrapper for discord.",
-install_requires=['aiohttp>=3.7.3', 'motor>=2.3.1'],
-python_requires='>=3.5.3',
+install_requires=['aiohttp>=3.7.3'],
+python_requires='>=3.7.0',
 project_urls={
 "Documentation": "https://discordwrapper.readthedocs.io/en/latest",
 
@@ -31,8 +31,6 @@ classifiers=[
     'Intended Audience :: Developers',      # Define that your audience are developers
     'Topic :: Utilities',
     'License :: OSI Approved :: MIT License',   # Again, pick a license
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9'
