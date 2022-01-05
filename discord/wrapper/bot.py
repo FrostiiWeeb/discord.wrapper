@@ -110,5 +110,6 @@ class Bot:
 		.. warning::
 		    This is a blocking function, so if you try to run any code after this function, it won\'t run.
 		"""
+		self.init()
 		self.gateway.connect(str(self.token), self.intents)
 		return f"Connected"																																																												
