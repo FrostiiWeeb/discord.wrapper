@@ -9,7 +9,7 @@ from .gateway import Gateway
 from .intents import Intents
 from .http_client import HTTPClient
 from .user import ClientUser
-from .channel import Channel
+from .channel import *
 from .guild import Guild
 from .content import Content
 import random
