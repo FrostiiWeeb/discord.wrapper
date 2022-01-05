@@ -4,7 +4,7 @@ import aiohttp
 class Intents:
 	
 	"""
-	Discord priveliged intents.
+	Discord privileged intents.
 
     """
 	@classmethod

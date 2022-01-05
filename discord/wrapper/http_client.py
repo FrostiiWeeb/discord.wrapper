@@ -21,41 +21,32 @@ class HTTPClient:
 		}
 
 	async def delete(self, endpoint, **kwargs):
-			
-			data = kwargs.pop("data", None)
-			json = kwargs.pop("json", None)
-			
-			async with self.__session.post(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
-			    return await resp.json()		
+		data = kwargs.pop("data", None)
+		json = kwargs.pop("json", None)
+		async with self.__session.delete(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
+			return await resp.json()		
 						
 	async def put(self, endpoint, **kwargs):
+		data = kwargs.pop("data", None)
+		json = kwargs.pop("json", None)
+		async with self.__session.put(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
+			return await resp.json()
 			
-			data = kwargs.pop("data", None)
-			json = kwargs.pop("json", None)
-			
-			async with self.__session.put(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
-			    return await resp.json()
-
 	async def patch(self, endpoint, **kwargs):
-			
-			data = kwargs.pop("data", None)
-			json = kwargs.pop("json", None)
-			
-			async with self.__session.path(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
-			    return await resp.json()				
-												
-	async def get(self, endpoint, **kwargs):	
-			
-			async with self.__session.get(self.BASE + endpoint, headers=self.headers) as resp:
-			    return await resp.json()
+		data = kwargs.pop("data", None)
+		json = kwargs.pop("json", None)
+		async with self.__session.path(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
+			return await resp.json()
+				
+	async def get(self, endpoint, **kwargs):
+		async with self.__session.get(self.BASE + endpoint, headers=self.headers) as resp:
+			return await resp.json()
 			    
 	async def post(self, endpoint, **kwargs):
-			
-			data = kwargs.pop("data", None)
-			json = kwargs.pop("json", None)
-			
-			async with self.__session.post(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
-			    return await resp.json()			    
+		data = kwargs.pop("data", None)
+		json = kwargs.pop("json", None)
+		async with self.__session.post(self.BASE + endpoint, headers=self.headers, data=data, json=json) as resp:
+			return await resp.json()			    
 			
 	async def send_message(self, channel_id=None, content=None):
 		"""
