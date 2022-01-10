@@ -5,6 +5,9 @@ import json
 from string import Template
 from io import StringIO
 import ast
+import uvloop
+
+from aiohttp.hdrs import AUTHORIZATION
 
 
 class InvokeError(Exception):
@@ -22,7 +25,7 @@ class Gateway:
 
     def identify_json(self, token: str, intents: int):
         """
-        The identify payload to authorize the bot.
+                The identify payload to authorize the bot.
 
         Attributes
         ----------
@@ -32,16 +35,8 @@ class Gateway:
         intents : int
                 The intents for the bot.
         """
-
-        t = Template(
-            '{"op": 2,"d": {"token": "$token","intents": $intents, "properties": {"$os": "linux","$browser": "discord.wrapper","$device": "discord.wrapper"}, "status": "dnd", "since": 91879201, "afk": false},"s": null,"t": null}'
-        )
-        t = t.substitute(
-            token=str(token),
-            intents=intents,
-            os="$os",
-            browser="$browser",
-            device="$device",
+        t = '{"op": 2,"d": {"token": "{0}","intents": {1}, "properties": {"$os": "linux","$browser": "discord.wrapper","$device": "discord.wrapper"}, "status": "dnd", "since": 91879201, "afk": false},"s": null,"t": null}'.format(
+            str(token), intents
         )
 
         return t
@@ -50,10 +45,9 @@ class Gateway:
         """
         The |async| function to close the connection.
         """
-
         await self.ws.close()
 
-    async def start(self, _token: str, _intents: int):
+    async def connect_ws(self, _token: str, _intents: int):
         """
         Function to connect the bot to discord.
 
@@ -81,20 +75,19 @@ class Gateway:
             for data in dict_list:
                 if data["op"] == 10:
                     heartbeat = '{"op": 1,"d": 251}'
-                    p = self.identify_json(_token, _intents)
-                    p_l = json.loads(p)
-                    p_j = json.dumps(p_l)
-                    h = json.loads(heartbeat)
-                    h_json = json.dumps(h)
-                    await self.ws.send_str(h_json)
-                    await self.ws.send_str(p_j)
+                    protocol = self.identify_json(_token, _intents)
+                    protocol = json.loads(protocol)
+                    hearbeat = json.loads(heartbeat)
+                    await self.ws.send_json(heartbeat)
+                    await self.ws.send_json(protocol)
                     await self.get_data()
+
         except Exception as e:
             print(e)
 
     def connect(self, token: str, intents: int):
         """
-        The actual function to connect the bot to discord.
+        The actual `blocking` function to connect the bot to discord.
 
         Attributes
         ----------
@@ -106,5 +99,24 @@ class Gateway:
         """
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        asyncio.ensure_future(self.start(token, intents), loop=loop)
+        asyncio.ensure_future(self.connect_ws(token, intents), loop=loop)
+        loop.run_forever()
+
+    async def start(self, token: str, intents: int):
+        """
+        The actual function to connect the bot to discord.
+
+        Attributes
+        ----------
+
+        token : str
+                The token of the bot.
+        intents : int
+                The intents for the bot.
+        """
+        asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+        uvloop.install()
+        loop = uvloop.new_event_loop()
+        asyncio.set_event_loop(loop)
+        asyncio.ensure_future(self.connect_ws(token, intents), loop=loop)
         loop.run_forever()

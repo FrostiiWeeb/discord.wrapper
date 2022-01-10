@@ -8,7 +8,7 @@ class HTTPClient:
     def __init__(self, token: str):
 
         self.__session = aiohttp.ClientSession()
-        self.BASE = "https://discordapp.com/api/v6"
+        self.BASE = "https://discordapp.com/api/v8"
         user_agent = "DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
             "x.x.x", sys.version_info, aiohttp.__version__
