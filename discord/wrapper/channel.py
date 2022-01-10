@@ -1,5 +1,5 @@
-import aiohttp, asyncio, sys, datetime   
-   
+import aiohttp, asyncio, sys, datetime
+
 # https://discord.com/developers/docs/resources/user
 
 # https://github.com/kyb3r/pycord/blob/dev/pycord/api/http.py
@@ -25,7 +25,21 @@ class TextChannel:
     parent_id: str
     default_auto_archive_duration: int
 
-    def __init__(self, id: str, guild_id: str, name: str, type: int, position: int, permission_overwrites: List[Any], rate_limit_per_user: int, nsfw: bool, topic: str, last_message_id: str, parent_id: str, default_auto_archive_duration: int) -> None:
+    def __init__(
+        self,
+        id: str,
+        guild_id: str,
+        name: str,
+        type: int,
+        position: int,
+        permission_overwrites: List[Any],
+        rate_limit_per_user: int,
+        nsfw: bool,
+        topic: str,
+        last_message_id: str,
+        parent_id: str,
+        default_auto_archive_duration: int,
+    ) -> None:
         self.id = id
         self.guild_id = guild_id
         self.name = name
@@ -42,11 +56,14 @@ class TextChannel:
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)          
-                        
+        return datetime.datetime.utcfromtimestamp(timestamp).replace(
+            tzinfo=datetime.timezone.utc
+        )
+
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} is_nsfw={self.is_nsfw!r} topic={self.topic!r} last_message_id={self.last_message_id!r}"
         return "<TextChannel {}>".format(fmt)
+
 
 class AnnouncementChannel:
     id: str
@@ -61,7 +78,20 @@ class AnnouncementChannel:
     parent_id: str
     default_auto_archive_duration: int
 
-    def __init__(self, id: str, guild_id: str, name: str, type: int, position: int, permission_overwrites: List[Any], nsfw: bool, topic: str, last_message_id: str, parent_id: str, default_auto_archive_duration: int) -> None:
+    def __init__(
+        self,
+        id: str,
+        guild_id: str,
+        name: str,
+        type: int,
+        position: int,
+        permission_overwrites: List[Any],
+        nsfw: bool,
+        topic: str,
+        last_message_id: str,
+        parent_id: str,
+        default_auto_archive_duration: int,
+    ) -> None:
         self.id = id
         self.guild_id = guild_id
         self.name = name
@@ -77,11 +107,14 @@ class AnnouncementChannel:
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)          
-                        
+        return datetime.datetime.utcfromtimestamp(timestamp).replace(
+            tzinfo=datetime.timezone.utc
+        )
+
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} is_nsfw={self.is_nsfw!r} topic={self.topic!r} last_message_id={self.last_message_id!r}"
-        return "<AnnouncementChannel {}>".format(fmt)  
+        return "<AnnouncementChannel {}>".format(fmt)
+
 
 from typing import List, Any
 
@@ -99,7 +132,20 @@ class VoiceChannel:
     parent_id: None
     rtc_region: None
 
-    def __init__(self, id: str, guild_id: str, name: str, type: int, nsfw: bool, position: int, permission_overwrites: List[Any], bitrate: int, user_limit: int, parent_id: None, rtc_region: None) -> None:
+    def __init__(
+        self,
+        id: str,
+        guild_id: str,
+        name: str,
+        type: int,
+        nsfw: bool,
+        position: int,
+        permission_overwrites: List[Any],
+        bitrate: int,
+        user_limit: int,
+        parent_id: None,
+        rtc_region: None,
+    ) -> None:
         self.id = id
         self.guild_id = guild_id
         self.name = name
@@ -115,11 +161,14 @@ class VoiceChannel:
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)          
-                        
+        return datetime.datetime.utcfromtimestamp(timestamp).replace(
+            tzinfo=datetime.timezone.utc
+        )
+
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} is_nsfw={self.is_nsfw!r} topic={self.topic!r} last_message_id={self.last_message_id!r}"
-        return "<TextChannel {}>".format(fmt)  
+        return "<TextChannel {}>".format(fmt)
+
 
 from typing import List
 
@@ -143,7 +192,9 @@ class DMChannel:
     id: str
     recipients: List[Recipient]
 
-    def __init__(self, last_message_id: str, type: int, id: str, recipients: List[Recipient]) -> None:
+    def __init__(
+        self, last_message_id: str, type: int, id: str, recipients: List[Recipient]
+    ) -> None:
         self.last_message_id = last_message_id
         self.type = type
         self.id = id
@@ -152,11 +203,14 @@ class DMChannel:
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)          
-                        
+        return datetime.datetime.utcfromtimestamp(timestamp).replace(
+            tzinfo=datetime.timezone.utc
+        )
+
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} last_message_id={self.last_message_id!r}"
-        return "<DMChannel {}>".format(fmt) 
+        return "<DMChannel {}>".format(fmt)
+
 
 class GroupDMChannel:
     name: str
@@ -167,7 +221,16 @@ class GroupDMChannel:
     id: str
     owner_id: str
 
-    def __init__(self, name: str, icon: None, recipients: List[Recipient], last_message_id: str, type: int, id: str, owner_id: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        icon: None,
+        recipients: List[Recipient],
+        last_message_id: str,
+        type: int,
+        id: str,
+        owner_id: str,
+    ) -> None:
         self.name = name
         self.icon = icon
         self.recipients = recipients
@@ -179,10 +242,10 @@ class GroupDMChannel:
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(tzinfo=datetime.timezone.utc)          
-                        
+        return datetime.datetime.utcfromtimestamp(timestamp).replace(
+            tzinfo=datetime.timezone.utc
+        )
+
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} last_message_id={self.last_message_id!r} recipients={self.recipients!r} owner_id={self.owner_id}"
-        return "<GroupDMChannel {}>".format(fmt)  
-
-    
+        return "<GroupDMChannel {}>".format(fmt)

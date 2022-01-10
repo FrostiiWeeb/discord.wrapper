@@ -1,5 +1,5 @@
-import aiohttp, asyncio, sys, datetime  
-    
+import aiohttp, asyncio, sys, datetime
+
 
 # https://discord.com/developers/docs/resources/user
 
@@ -43,7 +43,40 @@ class Guild:
     rules_channel_id: str
     public_updates_channel_id: str
 
-    def __init__(self, id: str, name: str, icon: str, description: str, splash: None, discovery_splash: None, features: List[str], emojis: List[Any], banner: str, owner_id: str, application_id: None, region: None, afk_channel_id: None, afk_timeout: int, system_channel_id: None, widget_enabled: bool, widget_channel_id: None, verification_level: int, roles: List[Any], default_message_notifications: int, mfa_level: int, explicit_content_filter: int, max_presences: int, max_members: int, vanity_url_code: str, premium_tier: int, premium_subscription_count: int, system_channel_flags: int, preferred_locale: str, rules_channel_id: str, public_updates_channel_id: str) -> None:
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        icon: str,
+        description: str,
+        splash: None,
+        discovery_splash: None,
+        features: List[str],
+        emojis: List[Any],
+        banner: str,
+        owner_id: str,
+        application_id: None,
+        region: None,
+        afk_channel_id: None,
+        afk_timeout: int,
+        system_channel_id: None,
+        widget_enabled: bool,
+        widget_channel_id: None,
+        verification_level: int,
+        roles: List[Any],
+        default_message_notifications: int,
+        mfa_level: int,
+        explicit_content_filter: int,
+        max_presences: int,
+        max_members: int,
+        vanity_url_code: str,
+        premium_tier: int,
+        premium_subscription_count: int,
+        system_channel_flags: int,
+        preferred_locale: str,
+        rules_channel_id: str,
+        public_updates_channel_id: str,
+    ) -> None:
         self.id = id
         self.name = name
         self.icon = icon
