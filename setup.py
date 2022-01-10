@@ -20,7 +20,7 @@ setup(
     long_description=long_desc,
     long_description_content_type="text/markdown",
     description="An API wrapper for discord.",
-    install_requires=["aiohttp>=3.7.3"],
+    install_requires=["aiohttp>=3.7.3", "uvloop"],
     python_requires=">=3.7.0",
     project_urls={
         "Documentation": "https://discordwrapper.readthedocs.io/en/latest",
