@@ -16,4 +16,4 @@ class Content:
 
     def to_dict(self):
         data = {"tts": self.tts, "content": self.content}
-        return data
+        return json.dumps(data)

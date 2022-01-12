@@ -95,6 +95,8 @@ class Gateway:
 					if data["t"] == "READY":
 						print(data)
 						await self.on_ready(data["d"])
+					if data["op"] == 0:
+						print(data)
 					
 		except Exception:
 			import traceback
