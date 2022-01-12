@@ -6,22 +6,9 @@ from string import Template
 from io import StringIO
 import ast
 import uvloop, sys
-
+from .exceptions import *
 from aiohttp.hdrs import AUTHORIZATION
-
-
-INDENTIFY = """{
-  "op": 2,
-  "d": {
-    "token": "$token",
-    "intents": $intents,
-    "properties": {
-      "$os": "linux",
-      "$browser": "$browser",
-      "$device": "$device"
-    }
-  }
-}"""
+from .user import ClientUser
 
 class InvokeError(Exception):
     def __init__(self, message):
@@ -32,11 +19,17 @@ class Gateway:
 	def __init__(self, bot):
 		self.bot = bot
 		self.heartbeat = {"op": 1,"d": 251}
+		self.errors = {"4002": None}
 		
 	async def get_data(self):
-		data = await self.ws.receive_str()
-		print(data)
-		return data
+		data = await self.ws.receive()
+		if isinstance(data.data, int):
+			data = data.data
+			if data == 4004:
+				raise LoginFailure()
+			else:
+				data = data
+		return data.data
 		
 	def identify_json(self, token: str, intents: int = None):
 		"""
@@ -52,17 +45,23 @@ class Gateway:
         """
 		if not intents:
 			intents = 513
-			
-		t = Template('{"op": 2,"d": {"token": "$token","intents": $intents, "properties": {"$os": "linux","$browser": "discord.wrapper","$device": "discord.wrapper"}, "status": "online", "since": 91879201, "afk": false},"s": null,"t": null}')
-
-		t = t.substitute(token=token, intents=intents, os="$os", browser="$browser", device="$device")
-		return t
+		IDENTIFY = {"op": 2,"d": {"token": self.bot.http.token,"properties": {"$os": sys.platform,"$browser": "$browser","$device": "$device"}, "intents": intents}}
+		return json.dumps(IDENTIFY)
 		
 	async def close(self):
 		"""
         The |async| function to close the connection.
         """
 		await self.ws.close()
+
+	async def on_ready(self, data):
+		user = data["user"]
+		session_id = data["session_id"]
+		self.session_id = session_id
+		self.bot.user = ClientUser(int(user["id"]) or None,user["username"],user["discriminator"],user["avatar"] or None,user["verified"] or None,user["email"] or None,user["flags"],None,None,None,user["public_flags"] or None,)
+		for guild in data["guilds"]:
+			from .guild import UnavailableGuild
+			self.bot.unavailable_guilds.append(UnavailableGuild(True, guild["id"]))
 
 	async def connect_ws(self, token : str, intents : int):
 		"""
@@ -80,7 +79,8 @@ class Gateway:
 			self.__session = aiohttp.ClientSession()
 			self.ws = await self.__session.ws_connect(
                 "wss://gateway.discord.gg/?v=8&encoding=json",
-				autoclose=False
+				autoclose=False,
+				headers={'User-Agent': self.bot.http.user_agent}
             )
 			heartbeat_event = await self.get_data()
 			heartbeat_event = json.loads(heartbeat_event)
@@ -88,17 +88,24 @@ class Gateway:
 				heartbeat = self.heartbeat
 				heartbeat = json.dumps(heartbeat)
 				protocol = self.identify_json(token, intents)	
-				protocol = json.dumps(protocol)
 				await self.ws.send_str(heartbeat)
-				print(await self.get_data())
-				await self.ws.send_json(protocol)
+				await self.ws.send_str(protocol)
 				while True:
-					await asyncio.sleep(5)
-					print(await self.get_data())
-					await asyncio.sleep(5)
+					data = json.loads(await self.get_data())
+					if data["t"] == "READY":
+						print(data)
+						await self.on_ready(data["d"])
+					
 		except Exception:
 			import traceback
 			traceback.print_exc()
+			await self.ws.close()
+			await self.__session.close()
+			try:
+				sys.exit(1)
+			except SystemExit:
+				import os
+				os._exit(1)
 			
 	def connect(self, token: str, intents: int):
 		"""
@@ -113,12 +120,12 @@ class Gateway:
                 The intents for the bot.
         """
 		try:
-			loop = asyncio.new_event_loop()
-			asyncio.set_event_loop(loop)
-			asyncio.ensure_future(self.connect_ws(token, intents), loop=loop)
+			loop = self.bot.loop
+			asyncio.ensure_future(self.connect_ws(token, intents), loop=self.bot.loop)
 			loop.run_forever()
-		except KeyboardInterrupt:
-			sys.exit(1)
+		except Exception:
+			loop.stop()
+			loop.close()
 			
 	async def start(self, token: str, intents: int):
 		"""
@@ -133,8 +140,7 @@ class Gateway:
                 The intents for the bot.
         """
 		try:
-			loop = asyncio.new_event_loop()
-			asyncio.set_event_loop(loop)
+			loop = self.bot.loop
 			asyncio.ensure_future(self.connect_ws(token, intents), loop=loop)
 			loop.run_forever()
 		except KeyboardInterrupt:

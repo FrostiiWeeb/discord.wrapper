@@ -112,3 +112,11 @@ class Guild:
     def __repr__(self) -> str:
         fmt = f" id={self.id!r} name={self.name!r}"
         return "<Guild{}>".format(fmt)
+class UnavailableGuild:
+    unavailable: bool
+    id: str
+
+    def __init__(self, unavailable: bool, id: str) -> None:
+        self.unavailable = unavailable
+        self.id = int(id)
+

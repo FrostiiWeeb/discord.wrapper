@@ -36,8 +36,9 @@ class User:
         public_flags: int,
     ) -> None:
         self.id = id
-        self.username = username
+        self.name = username
         self.discriminator = discriminator
+        self.tag = discriminator
         self.avatar = avatar
         self.verified = verified
         self.email = email
@@ -89,16 +90,19 @@ class ClientUser:
     ) -> None:
         self.id = id
         self.username = username
+        self.tag = discriminator
         self.discriminator = discriminator
         self.avatar = avatar
         self.verified = verified
         self.email = email
         self.flags = flags
         self.banner = banner
+        self.name = username
         self.accent_color = accent_color
         self.premium_type = premium_type
         self.public_flags = public_flags
         self.DISCORD_EPOCH = 1420070400000
+        self.bot = True
         self.created_at = self.snowflake_time(self.id)
 
     def snowflake_time(self, id: int) -> datetime.datetime:

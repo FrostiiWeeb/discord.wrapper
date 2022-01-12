@@ -45,6 +45,9 @@ class Bot:
         self.gateway = Gateway(self)
         self.commands = {}
         self.guilds = []
+        self.unavailable_guilds = []
+        self.loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(self.loop)
 
     async def get_guild_data(self):
         """
@@ -88,10 +91,44 @@ class Bot:
         """
         user = await self.get_user_data()
         guilds = await self.get_guild_data()
-        self.user = ClientUser(int(user['id']) or None, user['username'], user['discriminator'], user['avatar'] or None, user['verified'] or None, user['email'] or None, user['flags'], user['banner'] or None, user['accent_color'] or None, None, user['public_flags'] or None)
+        print(guilds)
         for guild in guilds:
             try:
-                self.guilds.append(Guild(int(guild['id']), guild['name'], guild['icon'], guild['description'], guild['splash'] or None, guild['discovery_splash'] or None, guild['features'], guild['emojis'], guild['banner'] or None, guild['owner_id'], self.user.id, guild['region'] or None, guild['afk_chnnale_id'] or None, guild['afk_timeout'] or None, guild['system_channel_id'] or None, guild['widget_enabled'], guild['widget_channel_id'] or None, guild['verification_level'], guild['roles'], guild['default_message_notifications'], guild['mfa_level'] or None, guild['explicit_content_filter'], guild['max_presences'], guild['max_members'], guild['vanity_url_code'], guild['premium_tier'], guild['premium_subscription_count'], guild['system_channel_flags'], guild['preferred_local'], guild['rules_channel_id'] or "", guild['public_updates_channel_id'] or None))
+                self.guilds.append(
+                    Guild(
+                        int(guild["id"]),
+                        guild["name"],
+                        guild["icon"],
+                        guild["description"],
+                        guild["splash"] or None,
+                        guild["discovery_splash"] or None,
+                        guild["features"],
+                        guild["emojis"],
+                        guild["banner"] or None,
+                        guild["owner_id"],
+                        self.user.id,
+                        guild["region"] or None,
+                        guild["afk_chnnale_id"] or None,
+                        guild["afk_timeout"] or None,
+                        guild["system_channel_id"] or None,
+                        guild["widget_enabled"],
+                        guild["widget_channel_id"] or None,
+                        guild["verification_level"],
+                        guild["roles"],
+                        guild["default_message_notifications"],
+                        guild["mfa_level"] or None,
+                        guild["explicit_content_filter"],
+                        guild["max_presences"],
+                        guild["max_members"],
+                        guild["vanity_url_code"],
+                        guild["premium_tier"],
+                        guild["premium_subscription_count"],
+                        guild["system_channel_flags"],
+                        guild["preferred_local"],
+                        guild["rules_channel_id"] or "",
+                        guild["public_updates_channel_id"] or None,
+                    )
+                )
             except KeyError:
                 pass
 
@@ -113,4 +150,7 @@ class Bot:
         .. warning::
             This is a blocking function, so if you try to run any code after this function, it won\'t run.
         """
-        asyncio.get_event_loop().run_until_complete(self.init(), asyncio.gather(self.gateway.connect(str(self.token), self.intents)))
+        asyncio.get_event_loop().run_until_complete(
+            self.init(),
+            asyncio.gather(self.gateway.connect(str(self.token), self.intents)),
+        )
