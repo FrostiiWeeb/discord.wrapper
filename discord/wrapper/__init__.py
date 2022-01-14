@@ -10,4 +10,4 @@ from .author import *
 from .message import *
 from .exceptions import *
 
-__version__ = "3.0.2"
+__version__ = "3.0.3"
