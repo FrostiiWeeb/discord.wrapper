@@ -6,8 +6,6 @@ class HTTPClient:
     """Represents an http client sending requests to discord."""
 
     def __init__(self, token: str):
-
-        self.__session = aiohttp.ClientSession()
         self.BASE = "https://discordapp.com/api/v8"
         user_agent = "DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
@@ -20,43 +18,62 @@ class HTTPClient:
             "Content-Type": "application/json",
         }
 
+    async def set_session(self):
+        self.__session = aiohttp.ClientSession(headers=self.headers)
+
     async def delete(self, endpoint, **kwargs):
+        await self.set_session()
         data = kwargs.pop("data", None)
         json = kwargs.pop("json", None)
         async with self.__session.delete(
             self.BASE + endpoint, headers=self.headers, data=data, json=json
         ) as resp:
-            return await resp.json()
+            res = await resp.json()
+            await self.__session.close()
+            return res
 
     async def put(self, endpoint, **kwargs):
+        await self.set_session()
         data = kwargs.pop("data", None)
         json = kwargs.pop("json", None)
         async with self.__session.put(
             self.BASE + endpoint, headers=self.headers, data=data, json=json
         ) as resp:
-            return await resp.json()
+            res = await resp.json()
+            await self.__session.close()
+            return res
 
     async def patch(self, endpoint, **kwargs):
+        await self.set_session()
         data = kwargs.pop("data", None)
         json = kwargs.pop("json", None)
         async with self.__session.path(
             self.BASE + endpoint, headers=self.headers, data=data, json=json
         ) as resp:
-            return await resp.json()
+            res = await resp.json()
+            await self.__session.close()
+            return res
 
     async def get(self, endpoint, **kwargs):
+        await self.set_session()
         async with self.__session.get(
             self.BASE + endpoint, headers=self.headers
         ) as resp:
-            return await resp.json()
+
+            res = await resp.json()
+            await self.__session.close()
+            return res
 
     async def post(self, endpoint, **kwargs):
+        await self.set_session()
         data = kwargs.pop("data", None)
         json = kwargs.pop("json", None)
-        async with self.__session.post(
+        resp = await self.__session.post(
             self.BASE + endpoint, headers=self.headers, data=data, json=json
-        ) as resp:
-            return await resp.json()
+        )
+        result = await resp.json()
+        await self.__session.close()
+        return result
 
     async def send_message(self, channel_id=None, content=None):
         """
@@ -67,7 +84,7 @@ class HTTPClient:
             "content": content,
         }
 
-        return await self.post(f"/channels/{channel_id}/messages", data=data)
+        return await self.post(f"/channels/{channel_id}/messages", json=data)
 
     async def fetch_message(self, channel_id: int, message_id: int):
         """

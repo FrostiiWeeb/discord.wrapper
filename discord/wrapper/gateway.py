@@ -9,12 +9,36 @@ import uvloop, sys
 from .exceptions import *
 from aiohttp.hdrs import AUTHORIZATION
 from .user import ClientUser
-
+import threading
+import concurrent.futures
+from .message import *
 class InvokeError(Exception):
     def __init__(self, message):
-        super.__init__(message)
+        super().__init__(message)
 
 
+class KeepAlive(threading.Thread):
+	def __init__(self, ws : aiohttp.ClientSession, interval : int, *args, **kwargs) -> None:
+		self.ws = ws
+		self.interval = interval
+		super().__init__(*args, **kwargs)
+		self.event = threading.Event()
+		self.daemon = True
+	
+	def run(self):
+		while not self.event.wait(self.interval):
+			coro = self.ws.send_str(json.dumps({"op": 1,"d": 251}))
+			f = asyncio.run_coroutine_threadsafe(coro, loop=self.ws.loop)
+			try:
+				total = 0
+				while True:
+					try:
+						f.result(10)
+						break
+					except concurrent.futures.TimeoutError:
+						total += 10
+			except Exception:
+				self.stop()
 class Gateway:
 	def __init__(self, bot):
 		self.bot = bot
@@ -27,9 +51,14 @@ class Gateway:
 			data = data.data
 			if data == 4004:
 				raise LoginFailure()
+			elif data == 1000:
+				pass
 			else:
 				data = data
-		return data.data
+		try:
+			return data.data
+		except Exception:
+			return '{"op": 65, "s": null, "d": null, "t": "ERROR"}'
 		
 	def identify_json(self, token: str, intents: int = None):
 		"""
@@ -87,16 +116,30 @@ class Gateway:
 			if heartbeat_event["op"] == 10:
 				heartbeat = self.heartbeat
 				heartbeat = json.dumps(heartbeat)
-				protocol = self.identify_json(token, intents)	
+				protocol = self.identify_json(token, intents)
+				self.ws.loop = self.bot.loop	
+				interval = heartbeat_event["d"]['heartbeat_interval'] / 1000.0
+				self._keep_alive : threading.Thread = KeepAlive(ws=self.ws, interval=interval)
 				await self.ws.send_str(heartbeat)
+				self._keep_alive.start()
 				await self.ws.send_str(protocol)
+				command_exception = False
+				event_exception = False
 				while True:
 					data = json.loads(await self.get_data())
-					if data["t"] == "READY":
-						print(data)
-						await self.on_ready(data["d"])
-					if data["op"] == 0:
-						print(data)
+					for event in self.bot.events:
+						if data["t"] == "READY":
+							# print(data)
+							await self.on_ready(data["d"])
+							if event.type == "ready":
+								await event.callback()
+						if data["t"] == "MESSAGE_CREATE":
+							if event.type == 'message':
+								try:
+									await event.callback(Message(data["d"]))
+								except Exception as e:
+									event_exception = True
+									raise InvokeError(e) from e
 					
 		except Exception:
 			import traceback

@@ -20,7 +20,8 @@ import time
 import traceback
 from collections import deque
 import subprocess, functools
-import logging
+import logging, typing, inspect
+from .events import *
 
 
 class Bot:
@@ -46,8 +47,13 @@ class Bot:
         self.commands = {}
         self.guilds = []
         self.unavailable_guilds = []
+        self.events = []
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
+        self.http.__session = aiohttp.ClientSession()
+
+    async def send_message(self, channel_id : int, message : str):
+        await self.http.send_message(channel_id=channel_id, content=message)
 
     async def get_guild_data(self):
         """
@@ -61,7 +67,7 @@ class Bot:
 
     async def get_user_data(self):
         """
-                :function:
+        :function:
 
         A function to get the bot\'s user data.
 
@@ -71,7 +77,7 @@ class Bot:
 
     async def fetch_channel(self, id: int):
         """
-                :function:
+        :function:
 
         A function to fetch a channel.
 
@@ -132,6 +138,17 @@ class Bot:
             except KeyError:
                 pass
 
+    def event(self):
+        def command_wrapper(func : typing.Callable) -> typing.Callable:
+            self.add_listener(func)
+        return command_wrapper
+
+    def add_listener(self, function : typing.Callable):
+        if function.__name__ == 'on_message':
+            self.events.append(MessageCreate(callback=function, type="message"))
+        if function.__name__ == 'on_ready':
+            self.events.append(Ready(callback=function))
+
     async def close(self):
         """
         :function:
@@ -151,6 +168,5 @@ class Bot:
             This is a blocking function, so if you try to run any code after this function, it won\'t run.
         """
         asyncio.get_event_loop().run_until_complete(
-            self.init(),
             asyncio.gather(self.gateway.connect(str(self.token), self.intents)),
         )
