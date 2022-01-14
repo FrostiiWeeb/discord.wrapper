@@ -5,7 +5,7 @@ from pathlib import Path
 class HTTPClient:
     """Represents an http client sending requests to discord."""
 
-    def __init__(self, token: str):
+    def __init__(self, token: str, self_bot: bool):
         self.BASE = "https://discordapp.com/api/v8"
         user_agent = "DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
@@ -17,6 +17,18 @@ class HTTPClient:
             "User-Agent": self.user_agent,
             "Content-Type": "application/json",
         }
+        if self_bot:
+            import warnings
+
+            warnings.warn(
+                "Self-Bots are prohibited on discord. Use self-bots at your own risk.",
+                stacklevel=4,
+            )
+            self.headers = {
+                "Authorization": "{}".format(self.token),
+                "User-Agent": self.user_agent,
+                "Content-Type": "application/json",
+            }
 
     async def set_session(self):
         self.__session = aiohttp.ClientSession(headers=self.headers)

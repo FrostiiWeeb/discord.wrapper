@@ -38,8 +38,8 @@ class Bot:
 
     """
 
-    def __init__(self, token: str, *, intents: int = 0):
-        self.http = HTTPClient(str(token))
+    def __init__(self, token: str, *, intents: int = 0, self_bot: bool = False):
+        self.http = HTTPClient(str(token), self_bot)
         self.intents = intents
         self.cache = {}
         self.token = token
@@ -52,8 +52,8 @@ class Bot:
         asyncio.set_event_loop(self.loop)
         self.http.__session = aiohttp.ClientSession()
 
-    async def send_message(self, channel_id : int, message : str):
-        await self.http.send_message(channel_id=channel_id, content=message)
+    async def send_message(self, channel_id: int, message: str):
+        return await self.http.send_message(channel_id=channel_id, content=message)
 
     async def get_guild_data(self):
         """
@@ -139,14 +139,15 @@ class Bot:
                 pass
 
     def event(self):
-        def command_wrapper(func : typing.Callable) -> typing.Callable:
+        def command_wrapper(func: typing.Callable) -> typing.Callable:
             self.add_listener(func)
+
         return command_wrapper
 
-    def add_listener(self, function : typing.Callable):
-        if function.__name__ == 'on_message':
+    def add_listener(self, function: typing.Callable):
+        if function.__name__ == "on_message":
             self.events.append(MessageCreate(callback=function, type="message"))
-        if function.__name__ == 'on_ready':
+        if function.__name__ == "on_ready":
             self.events.append(Ready(callback=function))
 
     async def close(self):
