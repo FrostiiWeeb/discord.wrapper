@@ -5,6 +5,8 @@ import json
 import asyncio
 import aiohttp
 import json
+
+from .embed import Embed
 from .gateway import Gateway
 from .intents import Intents
 from .http_client import HTTPClient
@@ -42,6 +44,7 @@ class Bot:
         self.http = HTTPClient(str(token), self_bot)
         self.intents = intents
         self.cache = {}
+        self.message_cache = set()
         self.token = token
         self.gateway = Gateway(self)
         self.commands = {}
@@ -52,8 +55,8 @@ class Bot:
         asyncio.set_event_loop(self.loop)
         self.http.__session = aiohttp.ClientSession()
 
-    async def send_message(self, channel_id: int, message: str):
-        return await self.http.send_message(channel_id=channel_id, content=message)
+    async def send_message(self, channel_id: int, message: str = None, embed : Embed = None):
+        return await self.http.send_message(channel_id=channel_id, content=message, embed=embed)
 
     async def get_guild_data(self):
         """
@@ -168,6 +171,4 @@ class Bot:
         .. warning::
             This is a blocking function, so if you try to run any code after this function, it won\'t run.
         """
-        asyncio.get_event_loop().run_until_complete(
-            asyncio.gather(self.gateway.connect(str(self.token), self.intents)),
-        )
+        asyncio.get_event_loop().run_until_complete(self.gateway.start(str(self.token), self.intents))

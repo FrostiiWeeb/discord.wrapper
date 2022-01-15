@@ -1,6 +1,6 @@
 import aiohttp, asyncio, json, sys, os
 from pathlib import Path
-
+from .embed import Embed
 
 class HTTPClient:
     """Represents an http client sending requests to discord."""
@@ -87,16 +87,19 @@ class HTTPClient:
         await self.__session.close()
         return result
 
-    async def send_message(self, channel_id=None, content=None):
+    async def send_message(self, channel_id=None, content=None, embed : Embed = None):
         """
         Sends a message to discord.
         """
 
         data = {
-            "content": content,
+            "content": content
         }
+        if embed:
+            data["embed"] = embed.to_dict()
 
-        return await self.post(f"/channels/{channel_id}/messages", json=data)
+        post = await self.post(f"/channels/{channel_id}/messages", json=data)
+        return post
 
     async def fetch_message(self, channel_id: int, message_id: int):
         """

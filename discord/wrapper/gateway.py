@@ -204,6 +204,7 @@ class Gateway:
             asyncio.ensure_future(self.connect_ws(token, intents), loop=self.bot.loop)
             loop.run_forever()
         except Exception:
+            loop.run_until_complete(self.close())
             loop.stop()
             loop.close()
 

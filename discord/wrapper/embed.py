@@ -38,14 +38,12 @@ class Embed:
     def to_dict(self, to_json=True):
         """Turns the object into a dictionary"""
         d = {
-            "embed": {
                 key: getattr(self, key)
                 for key in self.__slots__
                 if hasattr(self, key) and getattr(self, key)
-            }
         }
         new = json.dumps(d)
         if to_json:
-            return json.dumps(d)
+            return json.loads(new)
         else:
-            return str(new)
+            return (new)
