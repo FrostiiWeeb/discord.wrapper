@@ -17,10 +17,12 @@ class Webhook():
 		self.__session = aiohttp.ClientSession(headers=self.headers)
 
 	async def send(self, content : str = None, embed : Embed = None):
+		await self.set_session()
 		payload = {
 			"content": content,
 		}
 		if embed:
 			payload["embed"] = embed.to_dict()
 		async with self.__session.post(self.url, json=payload) as resp:
+			await self.__session.close()
 			return resp.status_code
