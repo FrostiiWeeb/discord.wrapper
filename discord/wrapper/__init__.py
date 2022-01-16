@@ -10,5 +10,6 @@ from .author import *
 from .message import *
 from .activity import *
 from .exceptions import *
+from .webhook import *
 
 __version__ = "3.0.3"
