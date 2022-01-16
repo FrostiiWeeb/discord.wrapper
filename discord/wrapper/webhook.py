@@ -25,4 +25,4 @@ class Webhook():
 			payload["embed"] = embed.to_dict()
 		async with self.__session.post(self.url, json=payload) as resp:
 			await self.__session.close()
-			return resp.status_code
+			return resp.status
