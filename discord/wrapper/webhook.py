@@ -18,7 +18,7 @@ class Webhook():
 
 	async def send(self, content : str = None, embed : Embed = None):
 		payload = {
-			"content": content
+			"content": content,
 		}
 		if embed:
 			payload["embed"] = embed.to_dict()
