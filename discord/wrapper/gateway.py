@@ -12,6 +12,7 @@ from .user import ClientUser
 import threading
 import concurrent.futures
 from .message import *
+from .activity import Activity, ActivityType
 
 
 class InvokeError(Exception):
@@ -94,6 +95,17 @@ class Gateway:
         }
         return json.dumps(IDENTIFY)
 
+    async def change_presence(self, ws, activity : typing.Union[typing.List[Activity], Activity], afk : bool = False, status : str = "online"):
+        if isinstance(activity, list):
+            activities = []
+            for ac in activity:
+                activities.append({"name": ac.name, "type": ac.type})
+            payload = {"op": 3,"d": {"since": 91879201,"activities": activities,"status": status,"afk": afk}}
+        else:
+            payload = {"op": 3,"d": {"since": 91879201,"activities": [{"name": activity.name,"type": activity.type}],"status": "online","afk": False}}
+        payload = json.dumps(payload)
+        await ws.send_str(payload)
+
     async def close(self):
         """
         The |async| function to close the connection.
@@ -162,7 +174,6 @@ class Gateway:
                     data = json.loads(await self.get_data())
                     for event in self.bot.events:
                         if data["t"] == "READY":
-                            # print(data)
                             await self.on_ready(data["d"])
                             if event.type == "ready":
                                 await event.callback()

@@ -14,6 +14,7 @@ from .user import ClientUser
 from .channel import *
 from .guild import Guild
 from .content import Content
+from .activity import *
 import random
 import string
 import functools
@@ -54,6 +55,9 @@ class Bot:
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
         self.http.__session = aiohttp.ClientSession()
+
+    async def change_presence(self, activity : typing.Union[typing.List[Activity], Activity], status : str = "online", afk : bool = False):
+        await self.gateway.change_presence(self.gateway.ws, activity, afk=afk, status=status)
 
     async def send_message(self, channel_id: int, message: str = None, embed : Embed = None):
         return await self.http.send_message(channel_id=channel_id, content=message, embed=embed)
@@ -171,4 +175,4 @@ class Bot:
         .. warning::
             This is a blocking function, so if you try to run any code after this function, it won\'t run.
         """
-        asyncio.get_event_loop().run_until_complete(self.gateway.start(str(self.token), self.intents))
+        self.gateway.connect(str(self.token), self.intents)
