@@ -15,6 +15,7 @@ from .channel import *
 from .guild import Guild
 from .content import Content
 from .activity import *
+from .command import SlashCommand
 import random
 import string
 import functools
@@ -41,20 +42,20 @@ class Bot:
 
     """
 
-    def __init__(self, token: str, *, intents: int = 0, self_bot: bool = False):
-        self.http = HTTPClient(str(token), self_bot)
+    def __init__(self, token: str, *, intents: int = 0, self_bot: bool = False, create_in_guilds : bool = False):
+        self.create_in_guilds = create_in_guilds
+        self.http = HTTPClient(self, str(token), self_bot)
         self.intents = intents
         self.cache = {}
         self.message_cache = set()
         self.token = token
         self.gateway = Gateway(self)
-        self.commands = {}
+        self.commands = []
         self.guilds = []
         self.unavailable_guilds = []
         self.events = []
         self.loop = asyncio.new_event_loop()
         asyncio.set_event_loop(self.loop)
-        self.http.__session = aiohttp.ClientSession()
 
     async def change_presence(self, activity : typing.Union[typing.List[Activity], Activity], status : str = "online", afk : bool = False):
         await self.gateway.change_presence(self.gateway.ws, activity, afk=afk, status=status)
@@ -150,6 +151,15 @@ class Bot:
             self.add_listener(func)
 
         return command_wrapper
+    
+    def command(self, name : str):
+        def command_wrapper(func: typing.Callable) -> typing.Callable:
+            self.add_command(func, name)
+
+        return command_wrapper
+
+    def add_command(self, function: typing.Callable, name : str):
+        self.commands.append(SlashCommand(callback=function))
 
     def add_listener(self, function: typing.Callable):
         if function.__name__ == "on_message":

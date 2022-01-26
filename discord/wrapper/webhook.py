@@ -1,6 +1,7 @@
 from email import header
 import aiohttp, asyncio, sys
 from .embed import Embed
+import typing
 
 class Webhook():
 	def __init__(self, url : str, username : str = None):
@@ -15,9 +16,9 @@ class Webhook():
 		self.headers = {
 			"User-Agent": self.user_agent
 		}
-		self.__session = aiohttp.ClientSession()
+		self.__session = aiohttp.ClientSession(headers=self.headers)
 
-	async def send(self, content : str = None, embed : Embed = None):
+	async def send(self, content : str = None, embed : typing.Union[typing.List[Embed], Embed] = None):
 		await self.set_session()
 		payload = {
 			"content": content,

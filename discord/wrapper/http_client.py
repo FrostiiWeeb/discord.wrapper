@@ -1,11 +1,13 @@
 import aiohttp, asyncio, json, sys, os
 from pathlib import Path
+from .command import SlashCommand
 from .embed import Embed
 
 class HTTPClient:
     """Represents an http client sending requests to discord."""
 
-    def __init__(self, token: str, self_bot: bool):
+    def __init__(self, bot, token: str, self_bot: bool):
+        self.bot = bot
         self.BASE = "https://discordapp.com/api/v8"
         user_agent = "DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"
         self.user_agent = user_agent.format(
@@ -112,3 +114,27 @@ class HTTPClient:
         """
 
         return await self.get("/channels/{channel_id}/messages/{message_id}")
+
+    async def create_command(self, name : str, type : int = 2, specific_guild : int = None):
+        if self.bot.create_in_guilds:
+            for guild in self.bot.guilds:
+                url = f"/applications/{self.bot.user.id}/guilds/{guild.id}/commands"
+                payload = {
+                    "name": name,
+                    "type": type
+                }
+                await self.post(url, json=payload)
+        elif specific_guild:
+            url = f"/applications/{self.bot.user.id}/guilds/{specific_guild}/commands"
+            payload = {
+                "name": name,
+                "type": type
+            }
+            await self.post(url, json=payload)
+        else:
+            url = f"/applications/{self.bot.user.id}/commands"
+            payload = {
+                "name": name,
+                "type": type
+            }
+            await self.post(url, json=payload)

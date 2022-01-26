@@ -172,6 +172,8 @@ class Gateway:
                 await asyncio.sleep(5)
                 while True:
                     data = json.loads(await self.get_data())
+                    for command in self.bot.commands:
+                        self.bot.http.create_command(command.name, command.type)
                     for event in self.bot.events:
                         if data["t"] == "READY":
                             await self.on_ready(data["d"])
