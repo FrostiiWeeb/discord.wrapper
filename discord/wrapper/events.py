@@ -1,4 +1,4 @@
-import typing, inspect
+import typing, inspect, asyncio
 
 
 class MessageCreate(object):
@@ -23,5 +23,5 @@ class Ready(object):
         super().__init__()
         self.callback = callback
         self.type = type
-        if not inspect.iscoroutinefunction(callback):
+        if not asyncio.iscoroutinefunction(callback):
             raise RuntimeError("Callback not coroutine.")

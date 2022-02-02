@@ -6,7 +6,7 @@ from .embed import Embed
 class HTTPClient:
     """Represents an http client sending requests to discord."""
 
-    def __init__(self, bot, token: str, self_bot: bool):
+    def __init__(self, bot, token: str, self_bot: bool = False):
         self.bot = bot
         self.BASE = "https://discordapp.com/api/v8"
         user_agent = "DiscordBot (https://github.com/FrostiiWeeb/discord.wrapper {0}) Python/{1[0]}.{1[1]} aiohttp/{2}"

@@ -1,4 +1,5 @@
 import aiohttp, asyncio, sys, datetime
+from .http_client import HTTPClient
 
 
 # https://discord.com/developers/docs/resources/user
@@ -9,46 +10,20 @@ import aiohttp, asyncio, sys, datetime
 
 
 class User:
-    id: str
-    username: str
-    discriminator: int
-    avatar: str
-    verified: bool
-    email: str
-    flags: int
-    banner: str
-    accent_color: int
-    premium_type: int
-    public_flags: int
 
     def __init__(
-        self,
-        id: str,
-        username: str,
-        discriminator: int,
-        avatar: str,
-        verified: bool,
-        email: str,
-        flags: int,
-        banner: str,
-        accent_color: int,
-        premium_type: int,
-        public_flags: int,
+        self, http : HTTPClient, data : dict
     ) -> None:
-        self.id = id
-        self.name = username
-        self.discriminator = discriminator
-        self.tag = discriminator
-        self.avatar = avatar
-        self.verified = verified
-        self.email = email
-        self.flags = flags
-        self.banner = banner
-        self.accent_color = accent_color
-        self.premium_type = premium_type
-        self.public_flags = public_flags
+        self.username = ...
+        for i in data:
+            setattr(self, i, data[i])
+        self.name = self.username
         self.DISCORD_EPOCH = 1420070400000
         self.created_at = self.snowflake_time(self.id)
+        self.http = http
+
+    async def send(self):
+        ...
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
@@ -61,56 +36,7 @@ class User:
         return "<User {}>".format(fmt)
 
 
-class ClientUser:
-    id: str
-    username: str
-    discriminator: int
-    avatar: str
-    verified: bool
-    email: str
-    flags: int
-    banner: str
-    accent_color: int
-    premium_type: int
-    public_flags: int
-
-    def __init__(
-        self,
-        id: str,
-        username: str,
-        discriminator: int,
-        avatar: str,
-        verified: bool,
-        email: str,
-        flags: int,
-        banner: str,
-        accent_color: int,
-        premium_type: int,
-        public_flags: int,
-    ) -> None:
-        self.id = id
-        self.username = username
-        self.tag = discriminator
-        self.discriminator = discriminator
-        self.avatar = avatar
-        self.verified = verified
-        self.email = email
-        self.flags = flags
-        self.banner = banner
-        self.name = username
-        self.accent_color = accent_color
-        self.premium_type = premium_type
-        self.public_flags = public_flags
-        self.DISCORD_EPOCH = 1420070400000
+class ClientUser(User):
+    def __init__(self, http: HTTPClient, data: dict) -> None:
+        super().__init__(http, data)
         self.bot = True
-        self.created_at = self.snowflake_time(self.id)
-
-    def snowflake_time(self, id: int) -> datetime.datetime:
-        timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(
-            tzinfo=datetime.timezone.utc
-        )
-
-    def __repr__(self) -> str:
-        fmt = f"id={self.id!r} name={self.name!r} discriminator={self.discriminator!r} bot={self.bot!r}"
-        return "<ClientUser {}>".format(fmt)

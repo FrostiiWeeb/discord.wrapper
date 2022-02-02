@@ -1,4 +1,5 @@
 import aiohttp, asyncio, sys, datetime
+from .http_client import *
 
 # https://discord.com/developers/docs/resources/user
 
@@ -12,47 +13,16 @@ from typing import List, Any
 
 
 class TextChannel:
-    id: str
-    guild_id: str
-    name: str
-    type: int
-    position: int
-    permission_overwrites: List[Any]
-    rate_limit_per_user: int
-    nsfw: bool
-    topic: str
-    last_message_id: str
-    parent_id: str
-    default_auto_archive_duration: int
-
     def __init__(
-        self,
-        id: str,
-        guild_id: str,
-        name: str,
-        type: int,
-        position: int,
-        permission_overwrites: List[Any],
-        rate_limit_per_user: int,
-        nsfw: bool,
-        topic: str,
-        last_message_id: str,
-        parent_id: str,
-        default_auto_archive_duration: int,
+        self, http : HTTPClient, data : dict
     ) -> None:
-        self.id = id
-        self.guild_id = guild_id
-        self.name = name
-        self.type = type
-        self.position = position
-        self.permission_overwrites = permission_overwrites
-        self.rate_limit_per_user = rate_limit_per_user
-        self.nsfw = nsfw
-        self.topic = topic
-        self.last_message_id = last_message_id
-        self.parent_id = parent_id
-        self.default_auto_archive_duration = default_auto_archive_duration
+        for i in data:
+            setattr(self, i, data[i])
         self.DISCORD_EPOCH = 1420070400000
+        self.http = http
+
+    async def send(self, *args, **kwargs):
+        return await self.http.send_message(channel_id=self.id, *args, **kwargs)
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
@@ -65,51 +35,9 @@ class TextChannel:
         return "<TextChannel {}>".format(fmt)
 
 
-class AnnouncementChannel:
-    id: str
-    guild_id: str
-    name: str
-    type: int
-    position: int
-    permission_overwrites: List[Any]
-    nsfw: bool
-    topic: str
-    last_message_id: str
-    parent_id: str
-    default_auto_archive_duration: int
-
-    def __init__(
-        self,
-        id: str,
-        guild_id: str,
-        name: str,
-        type: int,
-        position: int,
-        permission_overwrites: List[Any],
-        nsfw: bool,
-        topic: str,
-        last_message_id: str,
-        parent_id: str,
-        default_auto_archive_duration: int,
-    ) -> None:
-        self.id = id
-        self.guild_id = guild_id
-        self.name = name
-        self.type = type
-        self.position = position
-        self.permission_overwrites = permission_overwrites
-        self.is_nsfw = nsfw
-        self.topic = topic
-        self.last_message_id = last_message_id
-        self.parent_id = parent_id
-        self.default_auto_archive_duration = default_auto_archive_duration
-        self.DISCORD_EPOCH = 1420070400000
-
-    def snowflake_time(self, id: int) -> datetime.datetime:
-        timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
-        return datetime.datetime.utcfromtimestamp(timestamp).replace(
-            tzinfo=datetime.timezone.utc
-        )
+class AnnouncementChannel(TextChannel):
+    def __init__(self, http: HTTPClient, data: dict) -> None:
+        super().__init__(http, data)
 
     def __repr__(self) -> str:
         fmt = f"id={self.id!r} name={self.name!r} is_nsfw={self.is_nsfw!r} topic={self.topic!r} last_message_id={self.last_message_id!r}"
@@ -120,44 +48,13 @@ from typing import List, Any
 
 
 class VoiceChannel:
-    id: str
-    guild_id: str
-    name: str
-    type: int
-    nsfw: bool
-    position: int
-    permission_overwrites: List[Any]
-    bitrate: int
-    user_limit: int
-    parent_id: None
-    rtc_region: None
-
     def __init__(
-        self,
-        id: str,
-        guild_id: str,
-        name: str,
-        type: int,
-        nsfw: bool,
-        position: int,
-        permission_overwrites: List[Any],
-        bitrate: int,
-        user_limit: int,
-        parent_id: None,
-        rtc_region: None,
+        self, http : HTTPClient, data : dict
     ) -> None:
-        self.id = id
-        self.guild_id = guild_id
-        self.name = name
-        self.type = type
-        self.nsfw = nsfw
-        self.position = position
-        self.permission_overwrites = permission_overwrites
-        self.bitrate = bitrate
-        self.user_limit = user_limit
-        self.parent_id = parent_id
-        self.rtc_region = rtc_region
+        for i in data:
+            setattr(self, i, data[i])
         self.DISCORD_EPOCH = 1420070400000
+        self.http = http
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
@@ -166,8 +63,8 @@ class VoiceChannel:
         )
 
     def __repr__(self) -> str:
-        fmt = f"id={self.id!r} name={self.name!r} is_nsfw={self.is_nsfw!r} topic={self.topic!r} last_message_id={self.last_message_id!r}"
-        return "<TextChannel {}>".format(fmt)
+        fmt = f"id={self.id!r} name={self.name!r}"
+        return "<VoiceChannel {}>".format(fmt)
 
 
 from typing import List
@@ -193,13 +90,14 @@ class DMChannel:
     recipients: List[Recipient]
 
     def __init__(
-        self, last_message_id: str, type: int, id: str, recipients: List[Recipient]
+        self, http : HTTPClient, last_message_id: str, type: int, id: str, recipients: List[Recipient]
     ) -> None:
         self.last_message_id = last_message_id
         self.type = type
         self.id = id
         self.recipients = recipients
         self.DISCORD_EPOCH = 1420070400000
+        self.http = http
 
     def snowflake_time(self, id: int) -> datetime.datetime:
         timestamp = ((id >> 22) + self.DISCORD_EPOCH) / 1000
