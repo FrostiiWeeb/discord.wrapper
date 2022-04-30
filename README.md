@@ -9,7 +9,7 @@
 
 <a href="https://pypi.org/project/discord.wrapper" traget="_blank">
     <img alt="PyPI - Supported Python Versions" src="https://img.shields.io/pypi/pyversions/discord.wrapper.svg">
-</a>s
+</a>
 
 An API wrapper for discord wich uses `async` and `await` api.
 
